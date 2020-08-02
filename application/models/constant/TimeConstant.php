@@ -2,22 +2,27 @@
 
 class TimeConstant extends CI_Model {
 	function get_current_timestamp() {
+		date_default_timezone_set('Asia/Jakarta');
 		return  date("Y-m-d H:i:s");
 	}
 
 	function get_current_date() {
+		date_default_timezone_set('Asia/Jakarta');
 		return  date("Y-m-d");
 	}
 
 	function get_current_year() {
+		date_default_timezone_set('Asia/Jakarta');
 		return  date("Y");
 	}
 
 	function get_current_month() {
+		date_default_timezone_set('Asia/Jakarta');
 		return  date("m");
 	}
 
 	function get_current_day() {
+		date_default_timezone_set('Asia/Jakarta');
 		return  date("d");
 	}
 
@@ -25,6 +30,7 @@ class TimeConstant extends CI_Model {
 		$modify = '-' .  $day. ' day';
 		$current = $this->get_current_timestamp();
 
+		date_default_timezone_set('Asia/Jakarta');
 		return date('Y-m-d', strtotime($modify, strtotime($current)));
 	}
 
