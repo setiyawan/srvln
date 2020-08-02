@@ -30,6 +30,20 @@ class Dashboard extends My_Controller {
     }
     
     public function index() {
-		$this->load->view('dashboard');
+    	$filter = array();
+    	if ($this->get_session_by_id('tipe_upk') != 3) {
+    		$filter['id_upk'] = $this->get_session_by_id('id_upk');
+    	}
+
+    	$data = array(
+    		'total_kasus' => $this->DashboardModel->total_kasus($filter),
+    		'total_kasus_konfirmasi' => $this->DashboardModel->total_kasus_konfirmasi($filter),
+    		'total_kasus_suspek' => $this->DashboardModel->total_kasus_suspek($filter),
+    		'total_kasus_probable' => $this->DashboardModel->total_kasus_probable($filter),
+    		'total_kontak_erat' => $this->DashboardModel->total_kontak_erat($filter),
+    		'total_kasus_rapid_reaktif' => $this->DashboardModel->total_kasus_rapid_reaktif($filter),
+    	);
+
+		$this->load->view('dashboard', $data);
 	}
 }

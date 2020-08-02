@@ -36,6 +36,7 @@ class My_Controller extends CI_Controller {
         $this->load->model('constant/TracingConstant');
 
         $this->load->model('Tracing');
+        $this->load->model('DashboardModel');
 
         ini_set('display_error','off');
         error_reporting(0);

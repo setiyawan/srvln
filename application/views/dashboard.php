@@ -34,7 +34,7 @@
                   <i class="fas fa-map-pin mr-2"></i>
                 </div>
               <h5 class="card-title">TOTAL KASUS</h5>
-              <div class="display-4">6631</div>
+              <div class="display-4"><?= $total_kasus ?></div>
               <a href=""><p class="card-text text-white">Lihat Detail <i class="fas fa-angle-double-right ml-2"></i></p></a>
           </div>
         </div>
@@ -45,7 +45,7 @@
                   <i class="fas fa-map-pin mr-2"></i>
                 </div>
               <h5 class="card-title">KASUS KONFIRMASI</h5>
-              <div class="display-4">572</div>
+              <div class="display-4"><?= $total_kasus_konfirmasi ?></div>
               <a href=""><p class="card-text text-white">Lihat Detail <i class="fas fa-angle-double-right ml-2"></i></p></a>
           </div>
         </div>
@@ -56,19 +56,18 @@
                   <i class="fas fa-map-pin mr-2"></i>
                 </div>
               <h5 class="card-title">KASUS SUSPEK</h5>
-              <div class="display-4">5.380</div>
+              <div class="display-4"><?= $total_kasus_suspek ?></div>
               <a href=""><p class="card-text text-white">Lihat Detail <i class="fas fa-angle-double-right ml-2"></i></p></a>
           </div>
         </div>
 
-       <div class="card bg-info ml-5 mt-3" style="width: 18rem;">
+        <div class="card bg-info ml-5" style="width: 18rem;">
               <div class="card-body">
-                
                 <div class="card-body-icon">
                   <i class="fas fa-map-pin mr-2"></i>
                 </div>
               <h5 class="card-title">KASUS PROBABLE</h5>
-              <div class="display-4">1.303</div>
+              <div class="display-4"><?= $total_kasus_probable ?></div>
               <a href=""><p class="card-text text-white">Lihat Detail <i class="fas fa-angle-double-right ml-2"></i></p></a>
           </div>
         </div>
@@ -79,7 +78,7 @@
                   <i class="fas fa-map-pin mr-2"></i>
                 </div>
               <h5 class="card-title">KONTAK ERAT DILACAK</h5>
-              <div class="display-4">1.200</div>
+              <div class="display-4"><?= $total_kontak_erat ?></div>
               <a href=""><p class="card-text text-white">Lihat Detail <i class="fas fa-angle-double-right ml-2"></i></p></a>
           </div>
         </div>  
@@ -90,55 +89,12 @@
                   <i class="fas fa-map-pin mr-2"></i>
                 </div>
               <h5 class="card-title">REAKTIF RAPID</h5>
-              <div class="display-4">271</div>
+              <div class="display-4"><?= $total_kasus_rapid_reaktif ?></div>
               <a href=""><p class="card-text text-white">Lihat Detail <i class="fas fa-angle-double-right ml-2"></i></p></a>
           </div>
         </div> 
 
       </div>
-      <h3><i class="fas fa-tachometer-alt mr-2 mt-5"></i>DIAGRAM DAN GRAFIK</h3><hr>
-      <div class="row">
-        <div class="col-md-6 bg-white">
-          <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-          <script type="text/javascript">
-            google.charts.load("current", {packages:['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-              var data = google.visualization.arrayToDataTable([
-                ["Element", "Density", { role: "style" } ],
-                ["Copper", 8.94, "#b87333"],
-                ["Silver", 10.49, "silver"],
-                ["Gold", 19.30, "gold"],
-                ["Platinum", 21.45, "color: #e5e4e2"]
-              ]);
-
-              var view = new google.visualization.DataView(data);
-              view.setColumns([0, 1,
-                               { calc: "stringify",
-                                 sourceColumn: 1,
-                                 type: "string",
-                                 role: "annotation" },
-                               2]);
-
-              var options = {
-                title: "Density of Precious Metals, in g/cm^3",
-                width: 600,
-                height: 400,
-                bar: {groupWidth: "95%"},
-                legend: { position: "none" },
-              };
-              var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-              chart.draw(view, options);
-          }
-          </script>
-          <div id="columnchart_values" style="width: 900px; height: 300px;"></div>
-        </div>
-        <div class="col-md-6 bg-white">
-          
-        </div>
-      </div>
-
-
     </div>
 
     <!-- Optional JavaScript -->
