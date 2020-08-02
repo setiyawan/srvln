@@ -31,6 +31,10 @@ class Kontakerat extends My_Controller {
     
     public function index() {
     	$filter['kontak_erat'] = 1;
+    	if ($this->get_session_by_id('tipe_upk') != 3) {
+    		$filter['id_upk'] = $this->get_session_by_id('id_upk');
+    	}
+    	
     	$data['epidemiologi'] = $this->Tracing->get_data_tracing($filter);
     	$data['id_upk'] = $this->get_session_by_id('id_upk');
 		

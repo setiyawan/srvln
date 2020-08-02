@@ -35,7 +35,7 @@
           </div>
           <div>
             <button type="submit" class="btn btn-primary mt-8"><i class="fas fa-search mr-2"> </i>Cari</button>
-            <button type="submit" class="btn btn-secondary mt-8"><i class="fas fa-download mr-2"> </i>Download</button>
+            <div type="button" onclick="location.href='<?= base_url()?>kasus/export?tanggal=<?= $tanggal ?>'" class="btn btn-secondary mt-8"><i class="fas fa-download mr-2"> </i>Download</div>
           </div>
           </form>
         </div>

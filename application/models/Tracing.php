@@ -15,6 +15,10 @@ class Tracing extends CI_Model {
             $this->db->where('kontak_erat', $filter['kontak_erat']);
         }
 
+        if (!empty($filter['id_upk'])) {
+            $this->db->where('gd.id_upk', $filter['id_upk']);
+        }
+
         if (!empty($filter['update_time'])) {
             $this->db->where('date(gd.update_time)', $filter['update_time']);
         }
