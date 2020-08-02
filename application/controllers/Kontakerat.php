@@ -28,6 +28,32 @@ class Kontakerat extends My_Controller {
 
         $this->must_login();
     }
+
+    private function next_id_kasus() {
+    	$filter['id_upk'] = $this->get_session_by_id('id_upk');
+    	$latest = $this->Tracing->latest_id_kasus($filter);
+    	$explode = explode("PE",$latest);
+
+    	$next_id = 1;
+    	if (count($explode) > 1) {
+    		$next_id = $explode[1] + 1;
+    	}
+
+    	return $this->get_session_by_id('user_id') . 'PE' . $next_id;
+    }
+
+    private function next_id_kontak_erat() {
+    	$filter['id_upk'] = $this->get_session_by_id('id_upk');
+    	$latest = $this->Tracing->latest_id_kontak_erat($filter);
+    	$explode = explode("KE",$latest);
+
+    	$next_id = 1;
+    	if (count($explode) > 1) {
+    		$next_id = $explode[1] + 1;
+    	}
+
+    	return $this->get_session_by_id('user_id') . 'KE' . $next_id;
+    }
     
     public function index() {
     	$filter['kontak_erat'] = 1;
@@ -80,15 +106,10 @@ class Kontakerat extends My_Controller {
 			'update_time' => $this->TimeConstant->get_current_timestamp()
 		);
 
-		if ($post['kategori_kasus'] == 'KONFIRMASI') {
-			$data_personal['pe'] = 1;
-		}
-
-
 		$gejala = $post['suhutubuhatas38'] . ',' . $post['suhutubuhbawah38'] . ',' . $post['batuk'] . ',' . $post['pilek'] . ',' . $post['sakittenggorokan'] . ',' . $post['sakitkepala'] . ',' . $post['sesaknapas'] . ',' . $post['lemah'] . ',' . $post['nyeriotot'] . ',' . $post['mual'] . ',' . $post['nyeriabdomen'] . ',' . $post['diare'];
 		$kondisi_penyerta = $post['hamil'] . ',' . $post['diabetes'] . ',' . $post['jantung'] . ',' . $post['hipertensi'] . ',' . $post['keganasan'] . ',' . $post['imunologi'] . ',' . $post['ginjal'] . ',' . $post['hati'] . ',' . $post['ppok'];
 		$data_gajala_diagnosa = array(
-			'id_kontak_erat' => $post['id_kontak_erat'],
+			'id_kontak_erat' => $this->next_id_kontak_erat(),
 			'id_upk' => $post['id_upk'],
 			'riwayat_perjalanan' => $post['riwayat_perjalanan'],
 			'ada_gejala' => $post['ada_gejala'],
@@ -109,6 +130,12 @@ class Kontakerat extends My_Controller {
 			'create_time' => $this->TimeConstant->get_current_timestamp(),
 			'update_time' => $this->TimeConstant->get_current_timestamp()
 		);
+
+		if ($post['kategori_kasus'] == 'KONFIRMASI' || $post['hasil_rapid_test'] == '1') {
+			$data_personal['pe'] = 1;
+			$data_gajala_diagnosa['id_kasus'] = $this->next_id_kasus();
+		}
+
 
 		$this->Tracing->add_data_personal($data_personal);
 
@@ -135,15 +162,9 @@ class Kontakerat extends My_Controller {
 			'update_time' => $this->TimeConstant->get_current_timestamp()
 		);
 
-		if ($post['kategori_kasus'] == 'KONFIRMASI') {
-			$data_personal['pe'] = 1;
-		}
-
-
 		$gejala = $post['suhutubuhatas38'] . ',' . $post['suhutubuhbawah38'] . ',' . $post['batuk'] . ',' . $post['pilek'] . ',' . $post['sakittenggorokan'] . ',' . $post['sakitkepala'] . ',' . $post['sesaknapas'] . ',' . $post['lemah'] . ',' . $post['nyeriotot'] . ',' . $post['mual'] . ',' . $post['nyeriabdomen'] . ',' . $post['diare'];
 		$kondisi_penyerta = $post['hamil'] . ',' . $post['diabetes'] . ',' . $post['jantung'] . ',' . $post['hipertensi'] . ',' . $post['keganasan'] . ',' . $post['imunologi'] . ',' . $post['ginjal'] . ',' . $post['hati'] . ',' . $post['ppok'];
 		$data_gajala_diagnosa = array(
-			'id_kontak_erat' => $post['id_kontak_erat'],
 			'id_upk' => $post['id_upk'],
 			'riwayat_perjalanan' => $post['riwayat_perjalanan'],
 			'ada_gejala' => $post['ada_gejala'],
@@ -163,6 +184,13 @@ class Kontakerat extends My_Controller {
 			'hasil_pemantauan' => $post['hasil_pemantauan'],
 			'update_time' => $this->TimeConstant->get_current_timestamp()
 		);
+
+		if ($post['kategori_kasus'] == 'KONFIRMASI' || $post['hasil_rapid_test'] == '1') {
+			$data_personal['pe'] = 1;
+			if ($post['id_kasus'] == '') {
+				$data_gajala_diagnosa['id_kasus'] = $this->next_id_kasus();
+			}
+		}
 
 		$this->Tracing->update_data_personal($data_personal, $id_personal);
 

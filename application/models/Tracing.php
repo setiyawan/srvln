@@ -29,6 +29,28 @@ class Tracing extends CI_Model {
         // die;
     }
 
+    public function latest_id_kasus($filter=[]) {
+        $this->db->select('id_kasus');
+        $this->db->from('gejala_diagnosa');
+        $this->db->where('id_kasus <>','NULL');
+        $this->db->where('id_upk',$filter['id_upk']);
+        $this->db->order_by('id_kasus','desc');
+        $this->db->limit(1);
+        
+        return $this->db->get()->row()->id_kasus;
+    }
+
+    public function latest_id_kontak_erat($filter=[]) {
+        $this->db->select('id_kontak_erat');
+        $this->db->from('gejala_diagnosa');
+        $this->db->where('id_kontak_erat <>','NULL');
+        $this->db->where('id_upk',$filter['id_upk']);
+        $this->db->order_by('id_kontak_erat','desc');
+        $this->db->limit(1);
+        
+        return $this->db->get()->row()->id_kontak_erat;
+    }
+
     // POST TRANSACTION
     public function add_data_personal($data) {
         return $this->db->insert('personal', $data);

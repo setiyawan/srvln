@@ -31,7 +31,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>ID Kasus</label>
-                <input type="text" name="id_kasus" class="form-control" value="<?= $this->Ternary->isset_value($epidemiologi['id_kasus'])?>" required>
+                <input type="text" disabled name="id_kasus" class="form-control" value="<?= $this->Ternary->isset_value($epidemiologi['id_kasus'], 'otomatis')?>" required>
               </div>
               <div class="form-group">
                 <label>NIK</label>

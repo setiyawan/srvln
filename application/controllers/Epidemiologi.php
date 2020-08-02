@@ -28,6 +28,19 @@ class Epidemiologi extends My_Controller {
 
         $this->must_login();
     }
+
+    private function next_id_kasus() {
+    	$filter['id_upk'] = $this->get_session_by_id('id_upk');
+    	$latest = $this->Tracing->latest_id_kasus($filter);
+    	$explode = explode("PE",$latest);
+
+    	$next_id = 1;
+    	if (count($explode) > 1) {
+    		$next_id = $explode[1] + 1;
+    	}
+
+    	return $this->get_session_by_id('user_id') . 'PE' . $next_id;
+    }
     
     public function index() {
     	$filter['pe'] = 1;
@@ -83,7 +96,7 @@ class Epidemiologi extends My_Controller {
 		$gejala = $post['suhutubuhatas38'] . ',' . $post['suhutubuhbawah38'] . ',' . $post['batuk'] . ',' . $post['pilek'] . ',' . $post['sakittenggorokan'] . ',' . $post['sakitkepala'] . ',' . $post['sesaknapas'] . ',' . $post['lemah'] . ',' . $post['nyeriotot'] . ',' . $post['mual'] . ',' . $post['nyeriabdomen'] . ',' . $post['diare'];
 		$kondisi_penyerta = $post['hamil'] . ',' . $post['diabetes'] . ',' . $post['jantung'] . ',' . $post['hipertensi'] . ',' . $post['keganasan'] . ',' . $post['imunologi'] . ',' . $post['ginjal'] . ',' . $post['hati'] . ',' . $post['ppok'];
 		$data_gajala_diagnosa = array(
-			'id_kasus' => $post['id_kasus'],
+			'id_kasus' => $this->next_id_kasus(),
 			'id_upk' => $post['id_upk'],
 			'riwayat_perjalanan' => $post['riwayat_perjalanan'],
 			'ada_gejala' => $post['ada_gejala'],
@@ -133,7 +146,6 @@ class Epidemiologi extends My_Controller {
 		$gejala = $post['suhutubuhatas38'] . ',' . $post['suhutubuhbawah38'] . ',' . $post['batuk'] . ',' . $post['pilek'] . ',' . $post['sakittenggorokan'] . ',' . $post['sakitkepala'] . ',' . $post['sesaknapas'] . ',' . $post['lemah'] . ',' . $post['nyeriotot'] . ',' . $post['mual'] . ',' . $post['nyeriabdomen'] . ',' . $post['diare'];
 		$kondisi_penyerta = $post['hamil'] . ',' . $post['diabetes'] . ',' . $post['jantung'] . ',' . $post['hipertensi'] . ',' . $post['keganasan'] . ',' . $post['imunologi'] . ',' . $post['ginjal'] . ',' . $post['hati'] . ',' . $post['ppok'];
 		$data_gajala_diagnosa = array(
-			'id_kasus' => $post['id_kasus'],
 			'id_upk' => $post['id_upk'],
 			'riwayat_perjalanan' => $post['riwayat_perjalanan'],
 			'ada_gejala' => $post['ada_gejala'],
